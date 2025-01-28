@@ -26,6 +26,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'periode_id',
+        'ruang_id',
+        'daftarulang_id', // Pastikan ada jika relasi belongsTo tetap digunakan
+
     ];
 
     /**
@@ -58,9 +61,18 @@ public function pendaftaran()
     return $this->belongsTo(Pendaftaran::class, 'pendaftaran_id');
 }
 
-public function daftarUlang()
+public function daftarulang()
 {
-    return $this->belongsTo(DaftarUlang::class, 'daftarulang_id');
+    // return $this->belongsTo(DaftarUlang::class, 'daftarulang_id');
+    return $this->hasOne(DaftarUlang::class, 'user_id', 'id');
+
+}
+
+
+
+public function ruang()
+{
+    return $this->belongsTo(Ruang::class, 'ruang_id');
 }
 
 // public function roles()

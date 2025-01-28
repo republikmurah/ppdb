@@ -46,11 +46,11 @@ class PendaftaranResource extends Resource
         return $form
             ->schema([
                 Section::make('Status Siswa')
-                ->description('Tombol ini hanya dapat diakses dan dilihat oleh Admin untuk menentukan status kelulusan siswa & Izin Unduh Frmulir')
-                ->hidden(!(Auth::user() && Auth::user()->hasRole('super_admin'))) // Menyembunyikan section jika bukan admin
+                ->description('Tombol ini hanya dapat diakses dan dilihat oleh Admin untuk menentukan status kelulusan siswa & Izin Unduh Formulir')
+                ->hidden(!(Auth::user() && Auth::user()->hasRole(['super_admin', 'Administrator']))) // Menyembunyikan section jika bukan admin
                 ->schema(function () {
                    // Memeriksa apakah pengguna adalah admin
-                      $isAdmin = Auth::user()->hasRole('super_admin');
+                      $isAdmin = Auth::user()->hasRole(['super_admin', 'Administrator']);
         
               return [
                 Toggle::make('is_lulus')  // Menambahkan field toggle untuk 'is_lulus'
@@ -60,12 +60,14 @@ class PendaftaranResource extends Resource
                 ->disabled(!$isAdmin)  // Mengunci toggle jika bukan admin
                 ->hidden(!$isAdmin) // Menyembunyikan toggle jika bukan admin
                 ->helperText($isAdmin ? 'Klik untuk mengubah status kelulusan' : 'Anda tidak dapat mengubah status kelulusan'),  // Menambahkan penjelasan jika bukan admin
+                
                 Toggle::make('can_download_formulir')
                 ->label('Izin Unduh Formulir')
                 ->visible(fn($record) => $record && $record->is_lulus)  // Menampilkan toggle hanya jika status lulus
                 ->disabled(fn($record) => !$record || !$record->is_lulus)  // Nonaktifkan toggle jika belum lulus
-                ->visible(fn() => Auth::user()->hasRole('super_admin')),  // Hanya super_admin yang dapat melihat toggle
-                
+                ->visible(fn() => Auth::user()->hasRole(['super_admin', 'Administrator']))  // Hanya super_admin yang dapat melihat toggle
+                ->helperText('Aktifkan toggle ini untuk memberikan izin kepada user untuk mengunduh formulir jika statusnya lulus.'),
+
         ];
     }),
 
@@ -583,20 +585,30 @@ class PendaftaranResource extends Resource
 Action::make('download_formulir')
     ->label('Formulir')
     ->icon('heroicon-o-arrow-down') // Atau bisa menggunakan icon lain jika perlu
+    ->visible(function ($record) {
+        // Menampilkan tombol hanya jika sudah ada izin dan status lulus
+        return $record && $record->is_lulus && $record->can_download_formulir;
+    })
     ->action(function ($record) {
         
+        // Pastikan toggle 'can_download_formulir' sudah diaktifkan dan status 'is_lulus' benar
+        if (!$record->can_download_formulir || !$record->is_lulus) {
+            return response()->json(['error' => 'Anda tidak diizinkan untuk mengunduh formulir.'], 403);
+        }
+
         // Membuat PDF menggunakan DomPDF
         $pdf = new Dompdf();
         $pdf->loadHtml(view('pdf_template_formulir', ['record' => $record])->render());
         $pdf->setPaper('A4', 'portrait');
         $pdf->render();
 
+        // Mengirimkan file PDF sebagai response download
         return response()->streamDownload(
             fn() => print($pdf->output()),
             'formulir.pdf',
             [
                 'Content-Type' => 'application/pdf',
-                'Content-Disposition' => 'attachment',
+                'Content-Disposition' => 'attachment; filename="formulir.pdf"',
             ]
         );
     }),
@@ -635,7 +647,7 @@ Action::make('download_formulir')
     $query = parent::getEloquentQuery();
 
     // Cek apakah pengguna adalah super_admin atau bukan
-    if (!auth()->user()->hasRole('super_admin')) {
+    if (!auth()->user()->hasRole(['super_admin', 'Administrator'])) {
         $query->where('user_id', auth()->id()); // Hanya pendaftaran milik pengguna yang ditampilkan
     }
 

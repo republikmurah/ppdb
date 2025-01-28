@@ -18,7 +18,7 @@ class UserResource extends Resource
     protected static ?string $model = User::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static ?string $navigationGroup = 'Setting';
+    protected static ?string $navigationGroup = 'Pengaturan';
 
     public static function form(Form $form): Form
     {
@@ -40,13 +40,16 @@ class UserResource extends Resource
                 ->relationship('periode', 'name')  // 'periode' adalah nama relasi di model User
                 ->label('Periode')
                 ->required(),     
+                Forms\Components\Select::make('ruang_id')  // Kolom 'ruang_id' di tabel users
+                ->relationship('ruang', 'name')  // 'ruang' adalah nama relasi di model User
+                ->label('Ruang Ujian Siswa'),
                 Forms\Components\Select::make('roles')
-    ->label('Roles')
-    ->multiple()
-    ->relationship('roles', 'name')  // Menggunakan relasi dari Spatie
-    ->preload()
-    ->searchable()
-    ->required(),
+                ->label('Roles')
+                ->multiple()
+                ->relationship('roles', 'name')  // Menggunakan relasi dari Spatie
+                ->preload()
+                ->searchable()
+                ->required(),
 
                 
        
@@ -74,7 +77,9 @@ class UserResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('periode.name')
                     ->searchable(),
-                    Tables\Columns\TextColumn::make('roles.name')
+                Tables\Columns\TextColumn::make('ruang.name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('roles.name')
     ->label('Roles')
     ->sortable()
     ->toggleable(),

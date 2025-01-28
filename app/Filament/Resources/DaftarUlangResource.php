@@ -299,7 +299,7 @@ public static function getEloquentQuery(): Builder
     $query = parent::getEloquentQuery();
 
     // Cek apakah pengguna adalah super_admin atau bukan
-    if (!auth()->user()->hasRole('super_admin')) {
+    if (!auth()->user()->hasRole(['super_admin', 'Administrator'])) {
         $query->where('user_id', auth()->id()); // Hanya pendaftaran milik pengguna yang ditampilkan
     }
 

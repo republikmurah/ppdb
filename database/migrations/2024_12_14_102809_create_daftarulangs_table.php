@@ -41,7 +41,6 @@ return new class extends Migration
             $table->string('alamat_ibu');
             $table->string('status_tempat_tinggal_ibu');
             $table->string('ktp_ibu');
-
             $table->timestamps();
         });
     }

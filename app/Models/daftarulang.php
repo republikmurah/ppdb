@@ -9,6 +9,8 @@ class daftarulang extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    // protected $table = 'daftarulang';
+
 
     public function user()
     {

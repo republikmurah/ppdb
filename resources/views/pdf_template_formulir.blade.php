@@ -83,7 +83,7 @@
         </tr>
         <tr>
             <th>Ruang Ujian</th>
-            <td>{{ $record->ruang_ujian }}</td>
+            <td>{{ $record->user->ruang->name }}</td>
         </tr>
         <tr>
             <th>Nama Lengkap</th>
@@ -223,47 +223,47 @@
         </tr>
         <tr>
             <th>Nama Lengkap Ayah Kandung</th>
-            <td>{{ $record->nama_lengkap_ayah }}</td>
+            <td>{{ optional($record->user->daftarulang)->nama_lengkap_ayah ?? 'Data tidak tersedia' }}</td>
         </tr>
         <tr>
             <th>NIK</th>
-            <td>{{ $record->nik_ayah }}</td>
+            <td>{{ optional($record->user->daftarulang)->nik_ayah ?? 'Data tidak tersedia' }}</td>
         </tr>
         <tr>
             <th>Tempat & Tanggal Lahir</th>
-            <td>{{ $record->tempat_lahir_ayah }}, {{ $record->tanggal_lahir_ayah }}</td>
+            <td>{{ optional($record->user->daftarulang)->tanggal_lahir_ayah ?? 'Data tidak tersedia' }}</td>
         </tr>
         <tr>
             <th>Status</th>
-            <td>{{ $record->status_ayah }}</td>
+            <td>{{ optional($record->user->daftarulang)->status_ayah ?? 'Data tidak tersedia' }}</td>
         </tr>
         <tr>
             <th>Pendidikan Terakhir</th>
-            <td>{{ $record->pendidikan_terakhir_ayah }}</td>
+            <td>{{ optional($record->user->daftarulang)->pendidikan_terakhir_ayah ?? 'Data tidak tersedia' }}</td>
         </tr>
         <tr>
             <th>Pekerjaan</th>
-            <td>{{ $record->pekerjaan_ayah }}</td>
+            <td>{{ optional($record->user->daftarulang)->pekerjaan_ayah ?? 'Data tidak tersedia' }}</td>
         </tr>
         <tr>
             <th>Domisili</th>
-            <td>{{ $record->domisili_ayah }}</td>
+            <td>{{ optional($record->user->daftarulang)->domisili_ayah ?? 'Data tidak tersedia' }}</td>
         </tr>
         <tr>
             <th>Nomor Handphone</th>
-            <td>{{ $record->handphone_ayah }}</td>
+            <td>{{ optional($record->user->daftarulang)->handphone_ayah ?? 'Data tidak tersedia' }}</td>
         </tr>
         <tr>
             <th>Penghasilan Rata-rata</th>
-            <td>{{ $record->penghasilan_ayah }}</td>
+            <td>{{ optional($record->user->daftarulang)->penghasilan_ayah ?? 'Data tidak tersedia' }}</td>
         </tr>
         <tr>
             <th>Alamat</th>
-            <td>{{ $record->alamat_ayah }}</td>
+            <td>{{ optional($record->user->daftarulang)->alamat_ayah ?? 'Data tidak tersedia' }}</td>
         </tr>
         <tr>
             <th>Status Tempat Tinggal</th>
-            <td>{{ $record->status_tempat_tinggal_ayah }}</td>
+            <td>{{ optional($record->user->daftarulang)->status_tempat_tinggal_ayah ?? 'Data tidak tersedia' }}</td>
         </tr>
         <tr>
             <th>BIODATA ORANGTUA PEREMPUAN</th>
@@ -271,47 +271,47 @@
         </tr>
         <tr>
             <th>Nama Lengkap Ibu Kandung</th>
-            <td>{{ $record->nama_lengkap_ibu }}</td>
+            <td>{{ optional($record->user->daftarulang)->nama_lengkap_ibu ?? 'Data tidak tersedia' }}</td>
         </tr>
         <tr>
             <th>NIK</th>
-            <td>{{ $record->nik_ibu }}</td>
+            <td>{{ optional($record->user->daftarulang)->nik_ibu ?? 'Data tidak tersedia' }}</td>
         </tr>
         <tr>
             <th>Tempat & Tanggal Lahir</th>
-            <td>{{ $record->tempat_lahir_ibu }}</td>
+            <td>{{ optional($record->user->daftarulang)->tempat_lahir_ibu ?? 'Data tidak tersedia' }}</td>
         </tr>
         <tr>
             <th>Status</th>
-            <td>{{ $record->status_ibu }}</td>
+            <td>{{ optional($record->user->daftarulang)->status_ibu ?? 'Data tidak tersedia' }}</td>
         </tr>
         <tr>
             <th>Pendidikan Terakhir</th>
-            <td>{{ $record->pendidikan_terakhir_ibu }}</td>
+            <td>{{ optional($record->user->daftarulang)->pendidikan_terakhir_ibu ?? 'Data tidak tersedia' }}</td>
         </tr>
         <tr>
             <th>Pekerjaan</th>
-            <td>{{ $record->pekerjaan_ibu }}</td>
+            <td>{{ optional($record->user->daftarulang)->pekerjaan_ibu ?? 'Data tidak tersedia' }}</td>
         </tr>
         <tr>
             <th>Domisili</th>
-            <td>{{ $record->domisili_ibu }}</td>
+            <td>{{ optional($record->user->daftarulang)->domisili_ibu ?? 'Data tidak tersedia' }}</td>
         </tr>
         <tr>
             <th>Nomor Handphone</th>
-            <td>{{ $record->handphone_ibu }}</td>
+            <td>{{ optional($record->user->daftarulang)->handphone_ibu ?? 'Data tidak tersedia' }}</td>
         </tr>
         <tr>
             <th>Penghasilan Rata-rata</th>
-            <td>{{ $record->penghasilan_ibu }}</td>
+            <td>{{ optional($record->user->daftarulang)->penghasilan_ibu ?? 'Data tidak tersedia' }}</td>
         </tr>
         <tr>
             <th>Alamat</th>
-            <td>{{ $record->alamat_ibu }}</td>
+            <td>{{ optional($record->user->daftarulang)->alamat_ibu ?? 'Data tidak tersedia' }}</td>
         </tr>
         <tr>
             <th>Status Tempat Tinggal</th>
-            <td>{{ $record->status_tempat_tinggal_ibu }}</td>
+            <td>{{ optional($record->user->daftarulang)->status_tempat_tinggal_ibu ?? 'Data tidak tersedia' }}</td>
         </tr>
         
     </table>

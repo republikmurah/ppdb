@@ -20,6 +20,7 @@ return new class extends Migration
             $table->rememberToken();
             $table->unsignedBigInteger('periode_id')->nullable(); // Add nullable if it's optional
             $table->foreign('periode_id')->references('id')->on('periodes'); // Foreign key constraint
+            $table->unsignedBigInteger('ruang_id')->nullable(); // Add nullable if it's optional
             $table->timestamps();
         });
         
